@@ -14,8 +14,11 @@ class PreParser (includeFileSearchPath: Array<String>) {
 	var insideComment = false
 		get() = insideCurlyComment || insideRoundComment || insideSlashyComment
 	val text: StringBuilder = StringBuilder()
+	var filePath: String = ""
+	var previousCharacterIsOpenBrace = false
 
 	public fun parseFile(filePath: String) {
+		this.filePath = filePath
 	}
 
 	fun parseText(text: String) {
@@ -25,6 +28,11 @@ class PreParser (includeFileSearchPath: Array<String>) {
 		if (insideComment) {
 			text.append(character)
 		} else {
+			if (character == '{')
+				insideCurlyComment = true
+			if (previousCharacterIsOpenBrace && character == '*')
+				insideRoundComment = true
+			previousCharacterIsOpenBrace = character == '('
 		}
 	}
 
