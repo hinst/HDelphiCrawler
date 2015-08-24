@@ -6,12 +6,12 @@ class PreParser (includeFileSearchPath: Array<String>) {
 
 	var word: String = ""
 	// { comment }
-	var insideCurlyComment: Boolean = false
+	var insideCurlyComment = false
 	// (* comment *)
-	var insideRoundComment: Boolean = false
+	var insideRoundComment = false
 	// // comment
-	var insideSlashyComment: Boolean = false
-	var insideComment: Boolean = false
+	var insideSlashyComment = false
+	var insideComment = false
 		get() = insideCurlyComment || insideRoundComment || insideSlashyComment
 	val text: StringBuilder = StringBuilder()
 
