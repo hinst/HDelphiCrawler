@@ -16,6 +16,10 @@ abstract open class TextInfo<T> {
 		}
 	}
 
+	public fun add(position: Int, value: T) {
+		add(Item(position, value))
+	}
+
 	public fun seal() {
 		items = itemList.toTypedArray()
 		itemList.clear()
