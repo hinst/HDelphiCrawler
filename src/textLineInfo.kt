@@ -2,16 +2,16 @@ package hinst.HDelphiCrawler
 
 import java.util.*
 
-class TextLineInfo {
+open class TextInfo<T> {
 
-	data class Item(val position: Int, val lineNumber: Int)
+	public inner data class Item(val position: Int, val value: T)
 	class SealedException(val sealed: Boolean): Exception(sealed.toString())
 
 	val itemList: MutableList<Item> = LinkedList<Item>()
 	var items: Array<Item> = emptyArray()
 
 	public fun add(item: Item) {
-		if (itemList.count() == 0 || itemList.last().lineNumber != item.lineNumber) {
+		if (itemList.count() == 0 || itemList.last().equals(item)) {
 			itemList.add(item)
 		}
 	}
@@ -34,3 +34,7 @@ class TextLineInfo {
 	}
 
 }
+
+class TextLineInfo : TextInfo<Int>()
+class TextCommentInfo : TextInfo<Boolean>()
+class TextFileInfo : TextInfo<String>()

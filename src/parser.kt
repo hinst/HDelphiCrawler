@@ -4,7 +4,7 @@ import hinst.HDelphiCrawler.Pascal
 
 class PreParser (includeFileSearchPath: Array<String>) {
 
-	var word: String = ""
+	var directive: String = ""
 	// { comment }
 	var insideCurlyComment = false
 	// (* comment *)
@@ -16,6 +16,9 @@ class PreParser (includeFileSearchPath: Array<String>) {
 	val text: StringBuilder = StringBuilder()
 	var filePath: String = ""
 	var previousCharacterIsOpenBrace = false
+	var previousCharacterIsOpenCurlyBrace = false
+	var insideCompilerDirective = false
+	var previousCharacterIsAsterisk = false
 
 	public fun parseFile(filePath: String) {
 		this.filePath = filePath
@@ -27,12 +30,20 @@ class PreParser (includeFileSearchPath: Array<String>) {
 	fun parse(character: Char) {
 		if (insideComment) {
 			text.append(character)
+			if (insideCurlyComment && character == '}')
+				insideCurlyComment = false
+			if (insideRoundComment && previousCharacterIsAsterisk && character == ')')
+				insideRoundComment = false
+			if (insideSlashyComment && character == '\n')
+				insideSlashyComment = false
+			previousCharacterIsAsterisk = character == '*'
 		} else {
-			if (character == '{')
-				insideCurlyComment = true
 			if (previousCharacterIsOpenBrace && character == '*')
 				insideRoundComment = true
+			if (previousCharacterIsOpenCurlyBrace && character == '$')
+				insideCompilerDirective = true
 			previousCharacterIsOpenBrace = character == '('
+			previousCharacterIsOpenCurlyBrace = character == '{'
 		}
 	}
 
