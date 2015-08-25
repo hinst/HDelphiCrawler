@@ -2,7 +2,7 @@ package hinst.HDelphiCrawler
 
 import java.util.*
 
-open class TextInfo<T> {
+abstract open class TextInfo<T> {
 
 	public inner data class Item(val position: Int, val value: T)
 	class SealedException(val sealed: Boolean): Exception(sealed.toString())
@@ -21,12 +21,14 @@ open class TextInfo<T> {
 		itemList.clear()
 	}
 
+	protected abstract open fun getDefaultValue(): T
+
 	// Get line number
-	public fun get(position: Int): Int {
-		var result = 0
+	public fun get(position: Int): T {
+		var result = getDefaultValue()
 		for (item in items) {
 			if (item.position <= position)
-				result = 0
+				result = item.value
 			else
 				break
 		}
@@ -35,6 +37,12 @@ open class TextInfo<T> {
 
 }
 
-class TextLineInfo : TextInfo<Int>()
-class TextCommentInfo : TextInfo<Boolean>()
-class TextFileInfo : TextInfo<String>()
+class TextLineInfo : TextInfo<Int>() {
+	override fun getDefaultValue(): Int = 0
+}
+class TextCommentInfo : TextInfo<Boolean>() {
+	override fun getDefaultValue(): Boolean = false
+}
+class TextFileInfo : TextInfo<String>() {
+	override fun getDefaultValue(): String = ""
+}
