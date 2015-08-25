@@ -1,8 +1,9 @@
 package hinst.HDelphiCrawler
 
 import hinst.HDelphiCrawler.Pascal
+import java.util.*
 
-class PreParser (includeFileSearchPath: Array<String>) {
+class PreParser () {
 
 	var directive: String = ""
 	// { comment }
@@ -29,6 +30,7 @@ class PreParser (includeFileSearchPath: Array<String>) {
 			files.seal()
 		}
 	}
+	public val includeFileSearchPath: MutableList<String> = LinkedList<String>()
 
 	public fun parseFile(filePath: String) {
 		this.filePath = filePath
