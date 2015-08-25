@@ -19,13 +19,26 @@ class PreParser (includeFileSearchPath: Array<String>) {
 	var previousCharacterIsOpenCurlyBrace = false
 	var insideCompilerDirective = false
 	var previousCharacterIsAsterisk = false
+	object textInfo {
+		val lines = TextLineInfo()
+		val comments = TextCommentInfo()
+		val files = TextFileInfo()
+		fun seal() {
+			lines.seal()
+			comments.seal()
+			files.seal()
+		}
+	}
 
 	public fun parseFile(filePath: String) {
 		this.filePath = filePath
-
+		val text = readFile(filePath, Charsets.UTF_8)
+		parseText(text)
 	}
 
 	fun parseText(text: String) {
+		for (character in text)
+			parse(character)
 	}
 
 	fun parse(character: Char) {
@@ -41,11 +54,15 @@ class PreParser (includeFileSearchPath: Array<String>) {
 		} else {
 			if (previousCharacterIsOpenBrace && character == '*')
 				insideRoundComment = true
-			if (previousCharacterIsOpenCurlyBrace && character == '$')
-				insideCompilerDirective = true
+			if (previousCharacterIsOpenCurlyBrace)
+				if (character == '$')
+					insideCompilerDirective = true
+				else
+					insideComment = true
 			previousCharacterIsOpenBrace = character == '('
 			previousCharacterIsOpenCurlyBrace = character == '{'
 		}
+		textInfo.comments.add(text.length() - 1, insideComment)
 	}
 
 }
