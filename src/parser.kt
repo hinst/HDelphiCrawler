@@ -22,6 +22,7 @@ class PreParser (includeFileSearchPath: Array<String>) {
 
 	public fun parseFile(filePath: String) {
 		this.filePath = filePath
+
 	}
 
 	fun parseText(text: String) {
