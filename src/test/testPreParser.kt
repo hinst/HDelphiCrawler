@@ -6,10 +6,11 @@ import java.io.File
 class TestPreParser {
 
 	fun go() {
+		preProcessFile("only_cc")
 	}
 
 	fun preProcessFile(fileSubPath: String) {
-		val pre = testDataSubfolder + File.separator + fileSubPath
+		val pre = initialWorkingDirectory + File.separator + testDataSubfolder + File.separator + fileSubPath
 		val filePath = pre + ".pas"
 		val processedFilePath = pre + "_pd.pas"
 		val processedStoredFilePath = pre + "_psd.pas"

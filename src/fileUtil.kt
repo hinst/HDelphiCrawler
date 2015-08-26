@@ -6,6 +6,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 val userDirKey = "user.dir"
+val initialWorkingDirectory = System.getProperty(userDirKey)
 
 fun readFileToString(filePath: String, encoding: Charset): String {
 	val bytes = Files.readAllBytes(Paths.get(filePath));

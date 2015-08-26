@@ -65,6 +65,8 @@ class PreParser() {
 					insideComment = true
 					textBuilder.append('{')
 				}
+			if (character != '{')
+				textBuilder.append(character);
 			previousCharacterIsOpenBrace = character == '('
 			previousCharacterIsOpenCurlyBrace = character == '{'
 		}
