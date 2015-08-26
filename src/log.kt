@@ -5,10 +5,12 @@ import org.apache.logging.log4j.Logger
 import java.lang.ref.WeakReference
 import java.util.*
 
-val logs: Map<Any, WeakReference<Logger>> = HashMap()
+val loggers: MutableMap<Any, WeakReference<Logger>> = HashMap()
 
-private fun Any.getExistingLogger(): Logger? {
-	val weakLogger = logs.get(this)
+interface HasLog {}
+
+private fun HasLog.getExistingLogger(): Logger? {
+	val weakLogger = loggers.get(this)
 	if (weakLogger != null) {
 		val logger = weakLogger.get()
 		if (logger != null) {
@@ -21,5 +23,11 @@ private fun Any.getExistingLogger(): Logger? {
 	}
 }
 
-fun Any.log(): Logger {
+fun HasLog.getLogger(): Logger {
+	var logger = getExistingLogger()
+	if (logger == null) {
+		logger = LogManager.getLogger()
+		loggers.put(this, WeakReference(logger))
+	}
+	return logger!!
 }

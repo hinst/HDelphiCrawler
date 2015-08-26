@@ -6,10 +6,10 @@ import hinst.HDelphiCrawler.*
 
 val testDataSubfolder = "testData"
 
-public class Test {
+public class Test: HasLog {
 
 	public Test fun test0() {
-		println(userDirKey + " = " + System.getProperty(userDirKey))
+		this.getLogger().info(userDirKey + " = " + System.getProperty(userDirKey))
 		println(osNameKey + " = " + System.getProperty(osNameKey))
 	}
 
