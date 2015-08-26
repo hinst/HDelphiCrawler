@@ -3,7 +3,7 @@ package hinst.HDelphiCrawler
 import hinst.HDelphiCrawler.Pascal
 import java.util.*
 
-class PreParser () {
+class PreParser() {
 
 	var directive: String = ""
 	// { comment }
@@ -14,27 +14,29 @@ class PreParser () {
 	var insideSlashyComment = false
 	var insideComment = false
 		get() = insideCurlyComment || insideRoundComment || insideSlashyComment
-	val text: StringBuilder = StringBuilder()
+	private val textBuilder: StringBuilder = StringBuilder()
+	val text: String
+		get() = textBuilder.toString()
 	var filePath: String = ""
 	var previousCharacterIsOpenBrace = false
 	var previousCharacterIsOpenCurlyBrace = false
 	var insideCompilerDirective = false
 	var previousCharacterIsAsterisk = false
-	object textInfo {
-		val lines = TextLineInfo()
-		val comments = TextCommentInfo()
-		val files = TextFileInfo()
-		fun seal() {
-			lines.seal()
-			comments.seal()
-			files.seal()
-		}
+
+	val lines = TextLineInfo()
+	val comments = TextCommentInfo()
+	val files = TextFileInfo()
+	fun seal() {
+		lines.seal()
+		comments.seal()
+		files.seal()
 	}
+
 	public val includeFileSearchPath: MutableList<String> = LinkedList<String>()
 
 	public fun parseFile(filePath: String) {
 		this.filePath = filePath
-		val text = readFile(filePath, Charsets.UTF_8)
+		val text = readFileToString(filePath, Charsets.UTF_8)
 		parseText(text)
 	}
 
@@ -45,7 +47,7 @@ class PreParser () {
 
 	fun parse(character: Char) {
 		if (insideComment) {
-			text.append(character)
+			textBuilder.append(character)
 			if (insideCurlyComment && character == '}')
 				insideCurlyComment = false
 			if (insideRoundComment && previousCharacterIsAsterisk && character == ')')
@@ -57,14 +59,16 @@ class PreParser () {
 			if (previousCharacterIsOpenBrace && character == '*')
 				insideRoundComment = true
 			if (previousCharacterIsOpenCurlyBrace)
-				if (character == '$')
+				if (character == '$') {
 					insideCompilerDirective = true
-				else
+				} else {
 					insideComment = true
+					textBuilder.append('{')
+				}
 			previousCharacterIsOpenBrace = character == '('
 			previousCharacterIsOpenCurlyBrace = character == '{'
 		}
-		textInfo.comments.add(text.length() - 1, insideComment)
+		comments.add(textBuilder.length() - 1, insideComment)
 	}
 
 }

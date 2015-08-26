@@ -2,7 +2,7 @@ package hinst.HDelphiCrawler
 
 import java.util.*
 
-abstract open class TextInfo<T> {
+abstract class TextInfo<T> {
 
 	public inner data class Item(val position: Int, val value: T)
 	class SealedException(val sealed: Boolean): Exception(sealed.toString())
@@ -25,7 +25,7 @@ abstract open class TextInfo<T> {
 		itemList.clear()
 	}
 
-	protected abstract open fun getDefaultValue(): T
+	protected abstract fun getDefaultValue(): T
 
 	// Get line number
 	public fun get(position: Int): T {

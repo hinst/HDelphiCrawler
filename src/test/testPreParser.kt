@@ -14,6 +14,9 @@ class TestPreParser {
 		val processedFilePath = pre + "_pd.pas"
 		val processedStoredFilePath = pre + "_psd.pas"
 		val preParser = PreParser()
+		preParser.parseFile(filePath)
+		val reversedText = debugReversePreParser(preParser)
+		writeStringToFile(processedFilePath, reversedText, Charsets.UTF_8)
 	}
 
 }

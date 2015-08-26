@@ -7,9 +7,14 @@ import java.nio.file.Paths
 
 val userDirKey = "user.dir"
 
-fun readFile(filePath: String, encoding: Charset): String {
+fun readFileToString(filePath: String, encoding: Charset): String {
 	val bytes = Files.readAllBytes(Paths.get(filePath));
 	return String(bytes, encoding);
+}
+
+fun writeStringToFile(filePath: String, text: String, encoding: Charset) {
+	val bytes = text.toByteArray(encoding)
+	Files.write(Paths.get(filePath), bytes)
 }
 
 fun compareFilePath(aFilePath: String, bFilePath: String) = aFilePath.equals(bFilePath, ignoreCase = checkIfOsIsWindows())

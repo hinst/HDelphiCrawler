@@ -2,8 +2,13 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/app.kt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/fileUtil.kt" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/pascal.kt" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/preParser.kt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/debugReversePreParser.kt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/testPreParser.kt" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/test/tests.kt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/textInfo.kt" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
