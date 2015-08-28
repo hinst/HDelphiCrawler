@@ -10,7 +10,7 @@ public class Test: HasLog {
 
 	init {
 		getLogger().info(userDirKey + " = " + System.getProperty(userDirKey))
-		getLogger().info(println(osNameKey + " = " + System.getProperty(osNameKey)))
+		getLogger().info(osNameKey + " = " + System.getProperty(osNameKey))
 	}
 
 	public Test fun testPreParser() {

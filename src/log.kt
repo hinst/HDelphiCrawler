@@ -32,3 +32,17 @@ fun HasLog.getLogger(): Logger {
 	}
 	return logger!!
 }
+
+fun getCallerFunctionName(): String {
+	val stackTraceElements = Thread.currentThread().getStackTrace()
+	return (
+		if (stackTraceElements.count() >= 3)
+			stackTraceElements[3].getMethodName()
+		else
+			""
+	)
+}
+
+fun makeFunLogger(): Logger {
+	return LogManager.getLogger(getCallerFunctionName())
+}

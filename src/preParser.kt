@@ -3,7 +3,7 @@ package hinst.HDelphiCrawler
 import hinst.HDelphiCrawler.Pascal
 import java.util.*
 
-class PreParser() {
+class PreParser() : HasLog {
 
 	var directive: String = ""
 	// { comment }
@@ -15,8 +15,7 @@ class PreParser() {
 	var insideComment = false
 		get() = insideCurlyComment || insideRoundComment || insideSlashyComment
 	private val textBuilder: StringBuilder = StringBuilder()
-	val text: String
-		get() = textBuilder.toString()
+	var text: String = ""
 	var filePath: String = ""
 	var previousCharacterIsOpenBrace = false
 	var previousCharacterIsOpenCurlyBrace = false
@@ -27,6 +26,7 @@ class PreParser() {
 	val comments = TextCommentInfo()
 	val files = TextFileInfo()
 	fun seal() {
+		text = textBuilder.toString()
 		lines.seal()
 		comments.seal()
 		files.seal()
@@ -38,6 +38,7 @@ class PreParser() {
 		this.filePath = filePath
 		val text = readFileToString(filePath, Charsets.UTF_8)
 		parseText(text)
+		seal()
 	}
 
 	fun parseText(text: String) {
