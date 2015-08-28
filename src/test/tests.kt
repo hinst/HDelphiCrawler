@@ -9,8 +9,8 @@ val testDataSubfolder = "testData"
 public class Test: HasLog {
 
 	public Test fun test0() {
-		this.getLogger().info(userDirKey + " = " + System.getProperty(userDirKey))
-		println(osNameKey + " = " + System.getProperty(osNameKey))
+		getLogger().info(userDirKey + " = " + System.getProperty(userDirKey))
+		getLogger().info(println(osNameKey + " = " + System.getProperty(osNameKey)))
 	}
 
 	public Test fun testPreParser() {
