@@ -8,8 +8,8 @@ val testDataSubfolder = "testData"
 
 public class Test: HasLog {
 
-	public Test fun test0() {
-		getLogger().error(userDirKey + " = " + System.getProperty(userDirKey))
+	init {
+		getLogger().info(userDirKey + " = " + System.getProperty(userDirKey))
 		getLogger().info(println(osNameKey + " = " + System.getProperty(osNameKey)))
 	}
 

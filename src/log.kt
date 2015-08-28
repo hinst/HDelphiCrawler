@@ -27,7 +27,7 @@ private fun HasLog.getExistingLogger(): Logger? {
 fun HasLog.getLogger(): Logger {
 	var logger = getExistingLogger()
 	if (logger == null) {
-		logger = LogManager.getLogger()
+		logger = LogManager.getLogger(this.javaClass.getCanonicalName())
 		loggers.put(this, WeakReference(logger))
 	}
 	return logger!!
