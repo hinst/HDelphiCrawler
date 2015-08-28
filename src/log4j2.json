@@ -5,7 +5,7 @@
 				"name": "Console",
 				"target": "SYSTEM_OUT",
 				"PatternLayout": {
-					"pattern": "%date %thread %logger %message\n"
+					"pattern": "%date{yyyyMMdd_HH:mm:ss.SSS} %thread %logger{1.} %message\n"
 				}
 			}
 		},
