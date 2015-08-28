@@ -6,6 +6,7 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 val loggers: MutableMap<Any, WeakReference<Logger>> = HashMap()
+val log4j2ConfigurationFileSystemPropertyKey = "log4j.configurationFile"
 
 interface HasLog {}
 

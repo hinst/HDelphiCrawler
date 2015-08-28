@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="log4j-api-2.3">
+  <library name="log4j">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/log4j-api-2.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/log4j-core-2.3.jar!/" />
