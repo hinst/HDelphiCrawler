@@ -14,6 +14,7 @@ class PreParser() : HasLog {
 	var insideSlashyComment = false
 	val insideComment: Boolean
 		get() = insideCurlyComment || insideRoundComment || insideSlashyComment
+	var wasInsideComment: Boolean = false
 	private val textBuilder: StringBuilder = StringBuilder()
 	var text: String = ""
 	var filePath: String = ""
@@ -49,8 +50,10 @@ class PreParser() : HasLog {
 	fun parse(character: Char) {
 		if (insideComment) {
 			textBuilder.append(character)
-			if (insideCurlyComment && character == '}')
+			if (insideCurlyComment && character == '}') {
 				insideCurlyComment = false
+				wasInsideComment = true
+			}
 			if (insideRoundComment && previousCharacterIsAsterisk && character == ')')
 				insideRoundComment = false
 			if (insideSlashyComment && character == '\n')
@@ -65,13 +68,17 @@ class PreParser() : HasLog {
 				} else {
 					insideCurlyComment = true
 					textBuilder.append('{')
+					comments.push(textBuilder.length() - 1, insideComment)
 				}
 			if (character != '{')
 				textBuilder.append(character);
+			if (wasInsideComment) {
+				comments.push(textBuilder.length() - 1, insideComment)
+				wasInsideComment = false
+			}
 			previousCharacterIsOpenBrace = character == '('
 			previousCharacterIsOpenCurlyBrace = character == '{'
 		}
-		comments.push(textBuilder.length() - 1, insideComment)
 	}
 
 }
