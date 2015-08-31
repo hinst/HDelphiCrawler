@@ -17,6 +17,7 @@ abstract class TextInfo<T> : HasLog {
 			itemList.remove(itemList.count() - 1)
 			itemList.add(item)
 		} else if (itemList.last().value != item.value){
+			itemList.add(item)
 		}
 	}
 

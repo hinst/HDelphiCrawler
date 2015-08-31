@@ -7,6 +7,7 @@ class TestPreParser : HasLog {
 
 	fun go() {
 		preProcessFile("only_cc")
+		preProcessFile("double_cc")
 	}
 
 	fun debugReversePreParser(a: PreParser): String {
@@ -24,15 +25,18 @@ class TestPreParser : HasLog {
 		return outputText.toString()
 	}
 	fun preProcessFile(fileSubPath: String) {
-		getLogger().info(fileSubPath)
 		val pre = initialWorkingDirectory + File.separator + testDataSubfolder + File.separator + fileSubPath
 		val filePath = pre + ".pas"
 		val processedFilePath = pre + "_pd.pas"
 		val processedStoredFilePath = pre + "_psd.pas"
 		val preParser = PreParser()
 		preParser.parseFile(filePath)
-		val reversedText = debugReversePreParser(preParser)
-		writeStringToFile(processedFilePath, reversedText, Charsets.UTF_8)
+		val processedText = debugReversePreParser(preParser)
+		writeStringToFile(processedFilePath, processedText, Charsets.UTF_8)
+		val processedStoredText = readFileToString(processedStoredFilePath, Charsets.UTF_8)
+		val matched = processedStoredText == processedText
+		getLogger().info(fileSubPath + " " + matched)
+		assert(matched)
 	}
 
 }

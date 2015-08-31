@@ -8,9 +8,17 @@ import java.nio.file.Paths
 val userDirKey = "user.dir"
 val initialWorkingDirectory = System.getProperty(userDirKey)
 
-fun readFileToString(filePath: String, encoding: Charset): String {
-	val bytes = Files.readAllBytes(Paths.get(filePath));
-	return String(bytes, encoding);
+fun readFileToString(filePath: String, encoding: Charset): String? {
+	var result: String? = null
+	var bytes: ByteArray? = null
+	try {
+		bytes = Files.readAllBytes(Paths.get(filePath));
+	} catch (e: NoSuchFileException) {
+	}
+	if (bytes != null) {
+		result = String(bytes, encoding);
+	}
+	return result
 }
 
 fun writeStringToFile(filePath: String, text: String, encoding: Charset) {
