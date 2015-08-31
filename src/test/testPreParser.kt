@@ -12,12 +12,11 @@ class TestPreParser : HasLog {
 	fun debugReversePreParser(a: PreParser): String {
 		val outputText = StringBuilder()
 		val sourceText = a.text
-		getLogger().info("sourceText.length = " + sourceText.length())
 		var commentStatus = false
 		for (i in sourceText.indices) {
 			val newCommentStatus = a.comments[i]
 			if (commentStatus != newCommentStatus) {
-				outputText.append(if (newCommentStatus) "{comment.start}" else "{comment.end")
+				outputText.append(if (newCommentStatus) "{comment.start}" else "{comment.end}")
 				commentStatus = newCommentStatus
 			}
 			outputText.append(sourceText[i])

@@ -12,7 +12,7 @@ class PreParser() : HasLog {
 	var insideRoundComment = false
 	// // comment
 	var insideSlashyComment = false
-	var insideComment = false
+	val insideComment: Boolean
 		get() = insideCurlyComment || insideRoundComment || insideSlashyComment
 	private val textBuilder: StringBuilder = StringBuilder()
 	var text: String = ""
@@ -63,7 +63,7 @@ class PreParser() : HasLog {
 				if (character == '$') {
 					insideCompilerDirective = true
 				} else {
-					insideComment = true
+					insideCurlyComment = true
 					textBuilder.append('{')
 				}
 			if (character != '{')
@@ -71,7 +71,7 @@ class PreParser() : HasLog {
 			previousCharacterIsOpenBrace = character == '('
 			previousCharacterIsOpenCurlyBrace = character == '{'
 		}
-		comments.add(textBuilder.length() - 1, insideComment)
+		comments.push(textBuilder.length() - 1, insideComment)
 	}
 
 }
