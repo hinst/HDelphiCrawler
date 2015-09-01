@@ -34,9 +34,10 @@ class TestPreParser : HasLog {
 		val processedText = debugReversePreParser(preParser)
 		writeStringToFile(processedFilePath, processedText, Charsets.UTF_8)
 		val processedStoredText = readFileToString(processedStoredFilePath, Charsets.UTF_8)
+		assert(processedStoredText != null, "for '" + fileSubPath + "' file: no stored content file '" + processedStoredFilePath + "'")
 		val matched = processedStoredText == processedText
 		getLogger().info(fileSubPath + " " + matched)
-		assert(matched)
+		assert(matched, "file content mismatch '" + fileSubPath + "' compared to stored file")
 	}
 
 }
