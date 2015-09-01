@@ -49,6 +49,10 @@ class PreParser() : HasLog {
 
 	fun parse(character: Char) {
 		fun processCommentExit() {
+			if (wasInsideComment && false == insideComment) {
+				comments.push(textBuilder.length() - 1, insideComment)
+				wasInsideComment = false
+			}
 		}
 		if (insideComment) {
 			textBuilder.append(character)
@@ -73,11 +77,8 @@ class PreParser() : HasLog {
 					comments.push(textBuilder.length() - 1, insideComment)
 				}
 			if (character != '{') {
-				textBuilder.append(character);
-				if (wasInsideComment && false == insideComment) {
-					comments.push(textBuilder.length() - 1, insideComment)
-					wasInsideComment = false
-				}
+				textBuilder.append(character)
+				processCommentExit()
 			}
 			previousCharacterIsOpenBrace = character == '('
 			previousCharacterIsOpenCurlyBrace = character == '{'
