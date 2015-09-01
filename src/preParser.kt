@@ -38,7 +38,7 @@ class PreParser() : HasLog {
 	public fun parseFile(filePath: String) {
 		this.filePath = filePath
 		val text = readFileToString(filePath, Charsets.UTF_8)
-		parseText(text)
+		parseText(text!!)
 		seal()
 	}
 
@@ -48,6 +48,8 @@ class PreParser() : HasLog {
 	}
 
 	fun parse(character: Char) {
+		fun processCommentExit() {
+		}
 		if (insideComment) {
 			textBuilder.append(character)
 			if (insideCurlyComment && character == '}') {
@@ -70,11 +72,12 @@ class PreParser() : HasLog {
 					textBuilder.append('{')
 					comments.push(textBuilder.length() - 1, insideComment)
 				}
-			if (character != '{')
+			if (character != '{') {
 				textBuilder.append(character);
-			if (wasInsideComment) {
-				comments.push(textBuilder.length() - 1, insideComment)
-				wasInsideComment = false
+				if (wasInsideComment && false == insideComment) {
+					comments.push(textBuilder.length() - 1, insideComment)
+					wasInsideComment = false
+				}
 			}
 			previousCharacterIsOpenBrace = character == '('
 			previousCharacterIsOpenCurlyBrace = character == '{'
