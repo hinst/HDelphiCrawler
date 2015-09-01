@@ -9,6 +9,7 @@ class TestPreParser : HasLog {
 		preProcessFile("only_cc")
 		preProcessFile("double_cc")
 		preProcessFile("two_cc")
+		preProcessFile("more_cc")
 	}
 
 	fun debugReversePreParser(a: PreParser): String {
@@ -37,7 +38,7 @@ class TestPreParser : HasLog {
 		val processedStoredText = readFileToString(processedStoredFilePath, Charsets.UTF_8)
 		assert(processedStoredText != null, "for '" + fileSubPath + "' file: no stored content file '" + processedStoredFilePath + "'")
 		val matched = processedStoredText == processedText
-		getLogger().info(fileSubPath + " " + matched)
+		getLogger().info(fileSubPath + " matched: " + matched)
 		assert(matched, "file content mismatch '" + fileSubPath + "' compared to stored file")
 	}
 
