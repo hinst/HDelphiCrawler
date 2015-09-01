@@ -13,7 +13,7 @@ fun readFileToString(filePath: String, encoding: Charset): String? {
 	var bytes: ByteArray? = null
 	try {
 		bytes = Files.readAllBytes(Paths.get(filePath));
-	} catch (e: NoSuchFileException) {
+	} catch (e: java.nio.file.NoSuchFileException) {
 	}
 	if (bytes != null) {
 		result = String(bytes, encoding);
