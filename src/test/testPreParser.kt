@@ -8,6 +8,7 @@ class TestPreParser : HasLog {
 	fun go() {
 		preProcessFile("only_cc")
 		preProcessFile("double_cc")
+		preProcessFile("two_cc")
 	}
 
 	fun debugReversePreParser(a: PreParser): String {
