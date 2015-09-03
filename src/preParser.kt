@@ -48,18 +48,16 @@ class PreParser() : HasLog {
 	}
 
 	fun parse(character: Char) {
-		fun processCommentExit() {
-			if (wasInsideComment && false == insideComment) {
-				comments.push(textBuilder.length() - 1, insideComment)
-				wasInsideComment = false
+		val wasInsideComment = this.wasInsideComment
+		fun checkCurlyCommentExit() {
+			if (insideCurlyComment && character == '}') {
+				insideCurlyComment = false
+				this.wasInsideComment = true
 			}
 		}
 		if (insideComment) {
 			textBuilder.append(character)
-			if (insideCurlyComment && character == '}') {
-				insideCurlyComment = false
-				wasInsideComment = true
-			}
+			checkCurlyCommentExit()
 			if (insideRoundComment && previousCharacterIsAsterisk && character == ')')
 				insideRoundComment = false
 			if (insideSlashyComment && character == '\n')
@@ -75,10 +73,14 @@ class PreParser() : HasLog {
 					insideCurlyComment = true
 					textBuilder.append('{')
 					comments.push(textBuilder.length() - 1, insideComment)
+					checkCurlyCommentExit()
 				}
 			if (character != '{') {
 				textBuilder.append(character)
-				processCommentExit()
+				if (wasInsideComment && false == insideComment) {
+					comments.push(textBuilder.length() - 1, insideComment)
+					this.wasInsideComment = false
+				}
 			}
 			previousCharacterIsOpenBrace = character == '('
 			previousCharacterIsOpenCurlyBrace = character == '{'
