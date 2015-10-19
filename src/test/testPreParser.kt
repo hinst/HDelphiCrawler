@@ -11,6 +11,7 @@ class TestPreParser : HasLog {
 		preProcessFile("two_cc")
 		preProcessFile("more_cc")
 		preProcessFile("slashy_comment_simple")
+		preProcessFile("slash_comment_multiple")
 	}
 
 	fun debugReversePreParser(a: PreParser): String {
